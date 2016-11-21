@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_registro"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.proyecto.aplicada.conectados.Registro">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="3dip"
+        android:text="Registro de nuevos usuarios"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:id="@+id/tituloRegistro"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp"
+        android:id="@+id/tableLayout"
+        android:layout_below="@+id/tituloRegistro"
+        >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp">
+            <TextView
+                android:layout_column="0"
+                android:padding="3dip"
+                android:text="Usuario:"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:layout_column="2"
+                android:hint="Nombre de usuario"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:maxLength="30"
+                android:maxLines="2"
+                android:id="@+id/txtNombreUsuario"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_column="0"
+                android:padding="3dip"
+                android:text="Contraseña:"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:layout_column="2"
+                android:hint="Contraseña"
+                android:layout_marginLeft="20dp"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="2"
+                android:id="@+id/txtPassword"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_column="0"
+                android:padding="3dip"
+                android:text="Nombre:"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:layout_column="2"
+                android:hint="Nombre completo"
+                android:layout_marginLeft="20dp"
+                android:maxLength="30"
+                android:maxLines="2"
+                android:id="@+id/txtNombreCompleto"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_column="0"
+                android:padding="3dip"
+                android:text="Carnet:"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:layout_column="2"
+                android:textColor="@android:color/black"
+                android:hint="Carnet universitario"
+                android:layout_marginLeft="20dp"
+                android:maxLength="30"
+                android:maxLines="2"
+                android:id="@+id/txtCarnet"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_column="0"
+                android:padding="3dip"
+                android:text="Correo:"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:layout_column="2"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/black"
+                android:hint="Correo institucional"
+                android:layout_marginLeft="20dp"
+                android:maxLength="30"
+                android:maxLines="2"
+                android:id="@+id/txtCorreo"/>
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tableLayout"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrarme"
+            android:id="@+id/idBtnRegistrarme"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/idBtnCancelar"
+            />
+    </LinearLayout>
+</RelativeLayout>

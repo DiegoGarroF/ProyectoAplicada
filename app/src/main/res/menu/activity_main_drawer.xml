@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Foto de Usuario" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Ofinas" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Perfil" />
+    </group>
+
+    <item android:title="Otras Opciones">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Compartir" />
+            <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_contact_mail_black_48dp"
+            android:title="Enviar Mensaje" />
+            <item
+                android:id="@+id/nav_sendCorreo"
+                android:icon="@drawable/ic_email_black_48dp"
+                android:title="Enviar Correo" />
+            <item
+                android:id="@+id/nav_contactos"
+                android:icon="@drawable/ic_contacts_black_48dp"
+                android:title="Contactos" />
+        </menu>
+    </item>
+
+</menu>
