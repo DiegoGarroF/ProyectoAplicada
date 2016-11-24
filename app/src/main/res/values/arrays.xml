@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="destinatarios">
+        <item>Biblioteca</item>
+        <item>Oficina de Becas</item>
+        <item>Oficina de Registro e Información</item>
+    </string-array>
+</resources>

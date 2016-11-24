@@ -1,5 +1,6 @@
 package com.proyecto.aplicada.conectados;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,49 +24,47 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    String dato="";
+
+
+    String datosUsuarios[];
     private ListView listView;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> arrayList;
+    private ProductListAdapter adapter;
+    private ArrayList<Product>listaMensajes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-        //correo.getText()
-       // correo.setText(""+getIntent().getExtras().getString("usuario"));
-       dato=getIntent().getExtras().getString("usuario");
-
-        toolbar.setTitle(getUsuario(dato));
+        toolbar.setTitle("Mensajes");
+       datosUsuarios=getIntent().getExtras().getString("usuario").split("##");
 
         setSupportActionBar(toolbar);
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         listView=(ListView)findViewById(R.id.listViewChtas);
+        listaMensajes=new ArrayList<>();
 
-        arrayList=new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.mensajes,arrayList);
-        listView.setAdapter(adapter);
+        if(datosUsuarios!=null&&datosUsuarios.length>2) {
+            String detalles[] = datosUsuarios[2].split("///////////");
+            for (int i = 0; i < (detalles.length - 2); i += 3) {
 
-        for(int i=0; i<getMensajes(dato).length; i++)
-        {
-            if(getMensajes(dato)[i]!=null) {
-                System.out.println("\nDATOS OBTENIDOS"+getMensajes(dato)[i]+"  Posicion "+i);
-                arrayList.add(getMensajes(dato)[i]);
+
+                listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length()-3 ), detalles[i]));
             }
+
+
+            adapter = new ProductListAdapter(getApplicationContext(), listaMensajes);
+            listView.setAdapter(adapter);
         }
-        adapter.notifyDataSetChanged();
+
+
     }
 
     @Override
@@ -83,10 +82,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         TextView correo=(TextView)findViewById(R.id.correo);
         TextView nombre=(TextView)findViewById(R.id.nombre);
-        correo.setText(getCorreo(dato));
-        nombre.setText(getUsuario(dato));
+
+        correo.setText(datosUsuarios[1]);
+        nombre.setText(datosUsuarios[0]);
+
         return true;
     }
 
@@ -120,41 +122,15 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            Intent intent= new Intent(this,ActivityMsjNuevo.class);
+            intent.putExtra("usuari",Login.NOMBREUSUARIO);
+            this.startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    // Metodo para obtener el usurio
-    public  String getUsuario(String palabra)
-    {
-        int posicion=palabra.indexOf('#');
-        if(posicion>=0)
-        {
-            return palabra.substring(0,posicion);
-        }
-        return null;
-    }
-    // Metodo para obtener el usurio
-    public  String getCorreo(String palabra)
-    {
-        int posicion=palabra.indexOf('#');
-        int posicionCorreo=palabra.indexOf('*');
-        if(posicion>=0)
-        {
-            return palabra.substring((posicion+1),posicionCorreo);
-        }
-        return null;
-    }
-    public String[] getMensajes(String palabra)
-    {
-        int posicion=palabra.indexOf('*');
-        String letras=palabra.substring((posicion+1),palabra.length());
-        String vector[]=letras.split("~");
-
-        return vector;
-    }
 }
