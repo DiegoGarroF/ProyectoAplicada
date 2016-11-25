@@ -1,9 +1,13 @@
 package com.proyecto.aplicada.conectados;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +24,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -29,7 +38,14 @@ public class MainActivity extends AppCompatActivity
     String datosUsuarios[];
     private ListView listView;
     private ProductListAdapter adapter;
-    private ArrayList<Product>listaMensajes;
+    private ArrayList<Product> listaMensajes;
+    public static String CORREO_USUARIO;
+    String dir = "";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mensajes");
-       datosUsuarios=getIntent().getExtras().getString("usuario").split("##");
+        datosUsuarios = getIntent().getExtras().getString("usuario").split("##");
 
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,15 +64,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listView=(ListView)findViewById(R.id.listViewChtas);
-        listaMensajes=new ArrayList<>();
+        listView = (ListView) findViewById(R.id.listViewChtas);
+        listaMensajes = new ArrayList<>();
 
-        if(datosUsuarios!=null&&datosUsuarios.length>2) {
+        if (datosUsuarios != null && datosUsuarios.length > 2) {
             String detalles[] = datosUsuarios[2].split("///////////");
             for (int i = 0; i < (detalles.length - 2); i += 3) {
 
 
-                listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length()-3 ), detalles[i]));
+                listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length() - 3), detalles[i]));
             }
 
 
@@ -65,6 +81,9 @@ public class MainActivity extends AppCompatActivity
         }
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -83,11 +102,12 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        TextView correo=(TextView)findViewById(R.id.correo);
-        TextView nombre=(TextView)findViewById(R.id.nombre);
+        TextView correo = (TextView) findViewById(R.id.correo);
+        TextView nombre = (TextView) findViewById(R.id.nombre);
 
         correo.setText(datosUsuarios[1]);
         nombre.setText(datosUsuarios[0]);
+        CORREO_USUARIO = datosUsuarios[1];
 
         return true;
     }
@@ -121,9 +141,37 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
+            final CharSequence[] items = {"Gmail", "Outlook", "UCR"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Elija  Servidor de Correos");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int item) {
+                    if (items[item].toString().equals("Gmail")) {
+                        dir = "https://accounts.google.com/ServiceLogin";
+                    }
+                    if (items[item].toString().equals("Outlook")) {
+                        dir = "https://login.live.com/login.srf";
+                    }
+                    if (items[item].toString().equals("UCR")) {
+                        dir = "https://correo.ucr.ac.cr/";
+                    }
+                    mostrarNavegadorWeb(dir);
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+
+
         } else if (id == R.id.nav_send) {
-            Intent intent= new Intent(this,ActivityMsjNuevo.class);
-            intent.putExtra("usuari",Login.NOMBREUSUARIO);
+            Intent intent = new Intent(this, ActivityMsjNuevo.class);
+            intent.putExtra("usuario", Login.NOMBREUSUARIO);
+            this.startActivity(intent);
+        } else if (id == R.id.nav_sendCorreo) {
+            Intent intent = new Intent(this, EnviarCorreo.class);
+            intent.putExtra("usuario", Login.NOMBREUSUARIO);
             this.startActivity(intent);
         }
 
@@ -133,4 +181,45 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void mostrarNavegadorWeb(String dir) {
+        Intent intento = new Intent(Intent.ACTION_VIEW);
+        intento.setData(Uri.parse(dir));
+        this.startActivity(intento);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
 }

@@ -1,14 +1,11 @@
 package com.proyecto.aplicada.conectados;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class Registro extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +26,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         txtUsuario=(EditText)findViewById(R.id.txtNombreUsuario);
         txtPassword=(EditText)findViewById(R.id.txtPassword);
         txtCarnet=(EditText)findViewById(R.id.txtCarnet);
-        txtCorreo=(EditText)findViewById(R.id.txtCorreo);
+        txtCorreo=(EditText)findViewById(R.id.txtCorreoDe);
 
         btnCancelar.setOnClickListener(this);
         btnRegistrarme.setOnClickListener(this);

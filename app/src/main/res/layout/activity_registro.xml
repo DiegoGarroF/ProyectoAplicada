@@ -133,7 +133,7 @@
                 android:layout_marginLeft="20dp"
                 android:maxLength="30"
                 android:maxLines="2"
-                android:id="@+id/txtCorreo"/>
+                android:id="@+id/txtCorreoDe"/>
         </TableRow>
     </TableLayout>
 
