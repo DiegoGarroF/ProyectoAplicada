@@ -50,7 +50,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 else {
                     Toast.makeText(getApplicationContext(),"Complete los datos",Toast.LENGTH_LONG).show();
                 }
-
+                txtUsuario.setText("");
+                txtPassword.setText("");
                 break;
 
             case R.id.btnCancelarLogin:

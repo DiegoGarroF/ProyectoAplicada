@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -70,8 +71,7 @@ public class MainActivity extends AppCompatActivity
         if (datosUsuarios != null && datosUsuarios.length > 2) {
             String detalles[] = datosUsuarios[2].split("///////////");
             for (int i = 0; i < (detalles.length - 2); i += 3) {
-
-
+                Log.d("Prueba",detalles[i + 2]);
                 listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length() - 3), detalles[i]));
             }
 
@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            this.finish();
         }
 
     }
