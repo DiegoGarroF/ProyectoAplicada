@@ -1,6 +1,7 @@
 package com.proyecto.aplicada.conectados;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +30,9 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
     private Spinner para;
     Date d = new Date();
     Button btnEnviarMsj;
+
+    private String[] listaUsuarios;
+    private ArrayList<String>users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,17 +50,25 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
         para = (Spinner) findViewById(R.id.spinner_para);
         conexion = new SqlConexion(this);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.destinatarios, android.R.layout.simple_spinner_dropdown_item);
+
+        String []listaUsuarios2=MainActivity.usuariosDisponibles.split("####");
+        for(int i=0;i<listaUsuarios2.length; i++)
+        {
+            System.out.println("EL USUARIO "+(i+1)+" es : "+listaUsuarios2[i]);
+        }
+        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaUsuarios2);
+
+        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.destinatarios, android.R.layout.simple_spinner_dropdown_item);
         //Añadimos el layout para el menú
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Le indicamos al spinner el adaptador a usar
-        para.setAdapter(adapter);
+        para.setAdapter(adapter2);
         txtFecha.setText(getDateTime());
     }
 
     private String getDateTime() {
         Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
+        //System.out.println("Current time => " + c.getTime());
 
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
         String formattedDate = df.format(c.getTime());
@@ -81,16 +95,9 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
         case R.id.btn_agregarM:
             String destinatario="";
 
-            if(para.getSelectedItem().toString().equalsIgnoreCase(("Biblioteca"))){
-                destinatario="admBiblioteca";
-            }else{
-                if(para.getSelectedItem().toString().equalsIgnoreCase(("Oficina de Becas"))){
-                    destinatario="admBecas";
-                }else{
-                    destinatario="admRegistro";
-                }
+            System.out.println("El usuario selccionado es "+para.getSelectedItem().toString());
+            destinatario=para.getSelectedItem().toString();
 
-            }
 
             ConexionSql conexionSql = new ConexionSql(this);
             //Ojo aquí xq si no se pasa el intent entonces no obtendrá el usuario

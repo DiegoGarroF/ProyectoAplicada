@@ -12,6 +12,7 @@ import android.os.SystemClock;
 public class ServicioDeMsj extends Service {
 
     private Thread hilo = null;
+    private  String nombre,password;
 
     public ServicioDeMsj() {
 
@@ -35,16 +36,24 @@ public class ServicioDeMsj extends Service {
     @Override
     public int onStartCommand(final Intent intent, final int flags, int startId) {
         //mensaje("Entro al StartCommand");
-        System.out.println("Hola entro al ONstart");
         if(hilo == null || !hilo.isAlive())
         {
             hilo = new Thread(new Runnable() {
                 public void run() {
                     boolean estado=true;
+                    int contador=0;
 
                     while (estado) {
                         //
-                        SystemClock.sleep(5000);
+                        try {
+                            Thread.sleep(1000);
+                            ConexionSql conexionSql = new ConexionSql(getApplicationContext());
+                            conexionSql.execute("Login", Login.NOMBREUSUARIO, Login.CONTRASEÑA);
+                            contador++;
+                        } catch (InterruptedException e) {
+
+                        }
+
                     }
                 }
             });

@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity
 
     String datosUsuarios[];
     private ListView listView;
+    private  TextView texto;
     private ProductListAdapter adapter;
     private ArrayList<Product> listaMensajes;
     public static String CORREO_USUARIO;
+    public static String usuariosDisponibles="";
     String dir = "";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -55,7 +57,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mensajes");
         datosUsuarios =Login.datos.split("##");// getIntent().getExtras().getString("usuario")
-
+        //ServicioDeMsj servicioDeMsj= new ServicioDeMsj(Login.NOMBREUSUARIO,Login.CONTRASEÑA);
+        listView = (ListView) findViewById(R.id.listViewChtas);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,26 +67,12 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        listView = (ListView) findViewById(R.id.listViewChtas);
-        listaMensajes = new ArrayList<>();
-
-        if (datosUsuarios != null && datosUsuarios.length > 2) {
-            String detalles[] = datosUsuarios[2].split("///////////");
-            for (int i = 0; i < (detalles.length - 2); i += 3) {
-                Log.d("Prueba",detalles[i + 2]);
-                listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length() - 3), detalles[i]));
-            }
-
-
-            adapter = new ProductListAdapter(getApplicationContext(), listaMensajes);
-            listView.setAdapter(adapter);
-        }
-
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        ServicioTractor servicioTractor= new ServicioTractor(getApplicationContext());
+
+        servicioTractor.execute(listView);
     }
 
     @Override
@@ -97,6 +86,27 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    // Metodo para cargar los datos
+    public void cargarDatos()
+    {
+        listView = (ListView) findViewById(R.id.listViewChtas);
+        listaMensajes = new ArrayList<>();
+        datosUsuarios =Login.datos.split("##");
+        if (datosUsuarios != null && datosUsuarios.length > 2) {
+            String detalles[] = datosUsuarios[2].split("///////////");
+            for (int i = 0; i < (detalles.length - 2); i += 3) {
+                listaMensajes.add(new Product(detalles[i + 1], detalles[i + 2].substring(detalles[i + 2].length() - 8, detalles[i + 2].length() - 3), detalles[i]));
+            }
+            adapter = new ProductListAdapter(getApplicationContext(), listaMensajes);
+            listView.setAdapter(adapter);
+        }
+
+
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,6 +177,9 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_send) {
+            ConexionSql conexionSql = new ConexionSql(getApplicationContext());
+            conexionSql.execute("USUARIOS", Login.NOMBREUSUARIO, Login.CONTRASEÑA);
+
             Intent intent = new Intent(this, ActivityMsjNuevo.class);
             intent.putExtra("usuario", Login.NOMBREUSUARIO);
             this.startActivity(intent);

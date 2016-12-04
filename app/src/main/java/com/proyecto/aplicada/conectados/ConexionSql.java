@@ -62,6 +62,12 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
             tipo="logueado";
             return validarAcciones(params,login_url);
         }
+        else if(type.equals("USUARIOS"))
+        {
+            login_url=constantes.listadoUsuario;
+            tipo="USUARIOS";
+            return validarAcciones(params,login_url);
+        }
         return  null;
     }
 
@@ -113,6 +119,11 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
         else if(tipo.equalsIgnoreCase("logueado"))
         {
             Login.datos=result;
+        }
+        else if(tipo.equalsIgnoreCase("USUARIOS"))
+        {
+            System.out.println("LOS USUARIOS ENCONTRADOS SON "+result);
+            MainActivity.usuariosDisponibles=result;
         }
     }
 
@@ -252,9 +263,38 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
             } catch (Exception e) {
 
             }
-        }
 
-        return null;
+        }
+        else if(tipo.equalsIgnoreCase("USUARIOS")) {
+            try {
+                System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                URL url = new URL(login_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+
+
+            } catch (Exception e) {
+
+            }
+        }
+    return null;
     }
 
 

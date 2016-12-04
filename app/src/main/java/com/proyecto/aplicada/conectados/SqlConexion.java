@@ -10,7 +10,7 @@ import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 
-public class SqlConexion extends SQLiteAssetHelper {
+public class  SqlConexion extends SQLiteAssetHelper {
 
     private static String baseDatos="BaseDatosAgenda.db";
     private SQLiteDatabase bd;

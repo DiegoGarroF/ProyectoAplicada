@@ -39,7 +39,6 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         switch (v.getId()){
 
             case R.id.idBtnRegistrarme:
-                System.out.println("Entro");
                 String type="Registrar";
                 String usuario = txtUsuario.getText().toString(); ;
                 String password = txtPassword.getText().toString();;
