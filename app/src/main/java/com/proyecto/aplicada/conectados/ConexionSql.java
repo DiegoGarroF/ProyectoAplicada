@@ -28,6 +28,7 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
     public String resultadoConsulta="";
     Constantes constantes;
     String tipo="";
+    String estadoLogueo=null;
     ConexionSql (Context ctx)
     {
         this.context=ctx;
@@ -56,7 +57,11 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
             tipo="insertarMsj";
             return validarAcciones(params,login_url);
         }
-
+        else if(type.equals("logueado"))
+        {
+            tipo="logueado";
+            return validarAcciones(params,login_url);
+        }
         return  null;
     }
 
@@ -83,6 +88,7 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
                 alertDialog.setMessage(result);
                 alertDialog.show();
             }
+
             else {
                 Intent intent= new Intent(context,MainActivity.class);
                 intent.putExtra("usuario",result);
@@ -104,7 +110,10 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
             intent.putExtra("usuario",result);
             context.startActivity(intent);
         }
-
+        else if(tipo.equalsIgnoreCase("logueado"))
+        {
+            Login.datos=result;
+        }
     }
 
     @Override
@@ -114,7 +123,6 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
 
     public Boolean verificarLogin(String datos)
     {
-        System.out.println("informacion de datos"+datos);
         if(!datos.equalsIgnoreCase("Usuario Incorrecto")) {
             resultadoConsulta="Existe";
             return true;
@@ -125,7 +133,7 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
     public String validarAcciones(String params[],String login_url)
     {
 
-        if(tipo.equalsIgnoreCase("Login")) {
+        if(tipo.equalsIgnoreCase("Login")||tipo.equalsIgnoreCase("logueado")) {
             try {
 
                 String user_name = params[1];
