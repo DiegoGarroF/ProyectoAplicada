@@ -22,7 +22,7 @@
         android:text="Usuario"
         android:layout_height="wrap_content"
         android:id="@+id/viewUsuario"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"         />
 
     <EditText
         android:id="@+id/txtUsuario"
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewUsuario"
         android:layout_centerHorizontal="true"
+        android:maxLines="1"
         />
 
     <TextView
@@ -48,13 +49,15 @@
         android:inputType="textPassword"
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewPass"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:maxLines="1" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/txtPasswordLogin">
+        android:layout_below="@+id/txtPasswordLogin"
+        android:id="@+id/linearBtn">
 
         <Button
             android:id="@+id/btnLogin"
@@ -75,5 +78,29 @@
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
+    <CheckBox
+        android:text="Recordarme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/idRecordarme"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_below="@+id/linearBtn"
+        android:layout_toLeftOf="@+id/idviewContraseñaOlv"
+        android:layout_toStartOf="@+id/idviewContraseñaOlv"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:text="¿Olvidaste tu contraseña?"
+        android:autoLink="all"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/idviewContraseñaOlv"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignBaseline="@+id/idRecordarme"
+        android:layout_alignBottom="@+id/idRecordarme"
+        android:layout_alignRight="@+id/viewMsj"
+        android:layout_alignEnd="@+id/viewMsj" />
 
 </RelativeLayout>

@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity implements View.OnClickListener{
 
-    TextView recuperarPw;
     Button btnRegistrarse;
     Button btnIniciarSesion;
 
@@ -25,11 +24,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-        recuperarPw = (TextView)findViewById(R.id.idviewContraseñaOlv);
-        recuperarPw.setOnClickListener(this);
         btnRegistrarse=(Button)findViewById(R.id.idBtnRegistrarse);
         btnRegistrarse.setOnClickListener(this);
-
         btnIniciarSesion=(Button)findViewById(R.id.idBtnIniciarSesion);
         btnIniciarSesion.setOnClickListener(this);
 
@@ -38,21 +34,6 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.idviewContraseñaOlv:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Se procederá a verificar su identidad")
-                        .setTitle("Recuperando contraseña")
-                        .setCancelable(false)
-                        .setNeutralButton("Aceptar",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                break;
-
             case R.id.idBtnRegistrarse:
                 Intent intent = new Intent(Inicio.this,Registro.class);
                 startActivity(intent);

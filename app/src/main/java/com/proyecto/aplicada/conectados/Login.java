@@ -1,11 +1,14 @@
 package com.proyecto.aplicada.conectados;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -20,6 +23,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText txtUsuario;
     private EditText txtPassword;
     SqlConexion conexion;
+    TextView recuperarPw;
     public static  String NOMBREUSUARIO="";
     public static  String CONTRASEÑA="";
     public static String datos="";
@@ -34,6 +38,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         btnCancelar.setOnClickListener(this);
         btnInciarSesion.setOnClickListener(this);
+
+        recuperarPw = (TextView)findViewById(R.id.idviewContraseñaOlv);
+        recuperarPw.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -60,6 +67,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Login.this,Inicio.class);
                 startActivity(intent);
                 break;
+
+            case R.id.idviewContraseñaOlv:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Se procederá a verificar su identidad")
+                                .setTitle("Recuperando contraseña")
+                            .setCancelable(false)
+                            .setNeutralButton("Aceptar",
+                                    new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
+
         }
     }
 }
