@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
     SqlConexion conexion;
     private Spinner para;
     Date d = new Date();
+    Button btnEnviarMsj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +35,8 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button button = (Button) findViewById(R.id.btn_agregarM);
-        button.setOnClickListener(this);
+        btnEnviarMsj = (Button) findViewById(R.id.btn_agregarM);
+        btnEnviarMsj.setOnClickListener(this);
 
         txtFecha = (EditText) findViewById(R.id.edit_txt_fecha);
         txtDesc = (EditText) findViewById(R.id.edit_txt_descripcion);
@@ -78,16 +80,18 @@ public class ActivityMsjNuevo extends AppCompatActivity implements View.OnClickL
     switch (v.getId()){
         case R.id.btn_agregarM:
             String destinatario="";
-            if(txtUsuarioPara.getText().toString().equalsIgnoreCase("Biblioteca")){
+
+            if(para.getSelectedItem().toString().equalsIgnoreCase(("Biblioteca"))){
                 destinatario="admBiblioteca";
             }else{
-                if(txtUsuarioPara.getText().toString().equalsIgnoreCase("Oficina de Becas")){
+                if(para.getSelectedItem().toString().equalsIgnoreCase(("Oficina de Becas"))){
                     destinatario="admBecas";
                 }else{
                     destinatario="admRegistro";
                 }
 
             }
+
             ConexionSql conexionSql = new ConexionSql(this);
             //Ojo aquí xq si no se pasa el intent entonces no obtendrá el usuario
             conexionSql.execute("insertarMsj",getIntent().getExtras().getString("usuario"),destinatario,txtDesc.getText().toString(),"0");
