@@ -21,7 +21,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText txtPassword;
     SqlConexion conexion;
     public static  String NOMBREUSUARIO="";
-
+    public static  String CONTRASEÑA="";
+    public static String datos="";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -42,6 +43,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String usuario = txtUsuario.getText().toString();
                 String password = txtPassword.getText().toString();
                 NOMBREUSUARIO=txtUsuario.getText().toString();
+                CONTRASEÑA=txtPassword.getText().toString();
                 String type="Login";
                 if(!usuario.trim().equalsIgnoreCase("")&&!password.trim().equalsIgnoreCase("")) {
                     ConexionSql conexionSql = new ConexionSql(this);

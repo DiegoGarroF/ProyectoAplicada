@@ -88,6 +88,7 @@ public class  ConexionSql extends AsyncTask<String,Void,String>
                 intent.putExtra("usuario",result);
 
                 context.startActivity(intent);
+                Login.datos=result;
             }
         }
         else if(tipo.equalsIgnoreCase("Registrar"))

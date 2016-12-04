@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mensajes");
-        datosUsuarios = getIntent().getExtras().getString("usuario").split("##");
+        datosUsuarios =Login.datos.split("##");// getIntent().getExtras().getString("usuario")
 
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
